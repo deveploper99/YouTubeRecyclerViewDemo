@@ -1,9 +1,12 @@
 package com.example.youtube
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +15,13 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlin.contracts.contract
 
-class ContentAdapter(private val videoList : ArrayList<ContentModel>):
+class ContentAdapter(private val videoList : ArrayList<ContentModel>,
+                     private val listener : OnItemClickListener):
     RecyclerView.Adapter<ContentAdapter.VideoviewHolder>() {
+
+        interface OnItemClickListener{
+            fun OnItemclick(video: ContentModel)
+        }
 
     class VideoviewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val imageCover = itemView.findViewById<ImageView>(R.id.imageView)
@@ -51,6 +59,13 @@ class ContentAdapter(private val videoList : ArrayList<ContentModel>):
         Glide.with(holder.itemView.context)
             .load(video.image)
             .into(holder.profileImage)
+
+        holder.itemView.setOnClickListener {
+            listener.OnItemclick(video)
+
+            val intent = Intent(holder.itemView.context, videoPlayer::class.java)
+            intent.putExtra("videoUrl",)
+        }
 
 
     }

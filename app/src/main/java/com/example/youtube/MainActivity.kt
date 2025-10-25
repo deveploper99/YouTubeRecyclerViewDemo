@@ -1,6 +1,8 @@
 package com.example.youtube
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,7 +20,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerview = findViewById(R.id.recyclerView)
-        recyclerview.layoutManager = LinearLayoutManager(this,)
+
+
+//        adapter = ContentAdapter(videoList,object : ContentAdapter.OnItemClickListener{
+//            override fun OnItemclick(video: ContentModel) {
+//                Toast.makeText(this@MainActivity,"click ed $title", Toast.LENGTH_LONG).show()
+//            }
+//
+//        })
 
 
         videoList= arrayListOf()
@@ -28,7 +37,8 @@ class MainActivity : AppCompatActivity() {
                 title = "Lyrical | Saiyaara Title Song | Ahaan, Aneet | Tanishk Bagchi, Faheem Abdullah, Arslan| Irshad Kamil",
                 channelNameView = "YRF · 788k views · 18 hours ago",
                 image = "https://img.youtube.com/vi/FudfVyYWNxQ/maxresdefault.jpg",
-                channelLogo = "https://img.youtube.com/vi/FudfVyYWNxQ/maxresdefault.jpg"
+                channelLogo = "https://img.youtube.com/vi/FudfVyYWNxQ/maxresdefault.jpg",
+                videoUrl =""
             )
         )
 
@@ -47,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 channelNameView = "YRF · 788k views · 18 hours ago",
                 image = "https://img.youtube.com/vi/sqJ2QhjBQaw/maxresdefault.jpg",
                 channelLogo = "https://img.youtube.com/vi/sqJ2QhjBQaw/maxresdefault.jpg"
+
             )
         )
         videoList.add(
@@ -60,8 +71,16 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        adapter = ContentAdapter(videoList,object : ContentAdapter.OnItemClickListener{
+            override fun OnItemclick(video: ContentModel) {
 
-        adapter = ContentAdapter(videoList)
+                Toast.makeText(this@MainActivity,"Clicked ${video.title}", Toast.LENGTH_LONG).show()
+            }
+
+        })
+
+        recyclerview.layoutManager = LinearLayoutManager(this)
+
         recyclerview.adapter = adapter
 
 
